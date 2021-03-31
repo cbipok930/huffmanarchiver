@@ -1,0 +1,68 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 26d035b123c69987d18f3934e8acf267dbe6451cb6c03c915893482ac07dee85
+
+name:           huffman
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/huffman#readme>
+homepage:       https://github.com/githubuser/huffman#readme
+bug-reports:    https://github.com/githubuser/huffman/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2021 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/huffman
+
+library
+  exposed-modules:
+      Huffman
+  other-modules:
+      Paths_huffman
+  hs-source-dirs:
+      src
+  build-depends:
+      base >=4.14.1.0 && <5
+    , bimap
+    , binary
+    , bytestring
+    , containers
+    , lens-family
+    , pipes
+    , pipes-binary
+    , pipes-bytestring >=2.1.7
+    , pipes-parse
+    , transformers
+  default-language: Haskell2010
+
+executable huffman-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_huffman
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.14.1.0 && <5
+    , binary
+    , bytestring
+    , containers
+    , huffman
+    , lens-family
+    , pipes
+    , pipes-binary
+    , pipes-bytestring >=2.1.7
+    , pipes-parse
+    , transformers
+  default-language: Haskell2010
