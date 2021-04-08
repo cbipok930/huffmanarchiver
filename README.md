@@ -1,11 +1,12 @@
-# huffman
-Program works through Huffman.bat at prog's root dir(Windows), or you can "stack exec", "stack run"
+# Huffman Archiver
+## **Format:**
+### *stack exec huffman-exe* [zip / unzip] [input file dir] [output file dir]
+#### Example: stack exec huffman-exe zip text.txt enc.enc
 
-You can compress file with "zip" and decode it with "unzip" in case of program asks you(just type it in command line)
+Program works through terminal 
+------------------------------
 
-Then program asks for file what it must transform (type file name/path)
-
-After you should indecate name of file, what program creates
+You can compress file with arg "zip" and decode it with arg "unzip"
 
 *Program doesn't delete input file
-*It works with files in program's root directory by default(if you don't type paths)# huffmanarchiver
+*It works with files in program's root directory by default(if you don't type paths)

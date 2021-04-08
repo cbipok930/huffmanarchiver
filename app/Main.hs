@@ -1,3 +1,4 @@
+{-# LANGUAGE BlockArguments #-}
 {-# LANGUAGE TupleSections #-}
 {-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE ScopedTypeVariables #-}
@@ -27,25 +28,20 @@ import qualified Data.Map.Strict as M
 
 main :: IO ()
 main = do
-  print "What do you want to do with file (zip / unzip)?"
-  mode <- getLine
-  case mode of "zip" -> print "Enter input file name/path to compress file"
-               "unzip" -> print "Enter input file name/path to decode file"
-               _ -> error "Wrong command"
-  inp <- getLine
-  metadata <- analyzeFile inp
-  let (len, tree) = case metadata of
-         Just (l, t) -> (l, t)
-         Nothing -> error "Empty File"                         
-  print "Enter output file name/path"
-  out <- getLine
-  print "Doing some magic..."
-  case mode of "zip" -> encodeFile inp out len tree
-               "unzip" -> Main.decodeFile inp out             
-  print"Done!!!!!!!!!!!"
-
-
-
+    args <- getArgs
+    case head args of "zip" -> do
+                            print "File analyze..."
+                            metadata <- analyzeFile (head $ tail args)
+                            let (len, tree) = case metadata of Just (l, t) -> (l, t)
+                                                               Nothing -> error "Empty File"
+                            print "Encoding File..."
+                            encodeFile (head $ tail args) (last args) len tree
+                            print "Done!!!!!!!!!!!!!!!!!"
+                      "unzip" -> do
+                              print "Decoding file..."
+                              Main.decodeFile (head $ tail args) (last args)
+                              print "Done!!!!!!1"
+                      _ -> error "Wrong arg"
 
 ---------- ============================================= encode pipeline and file analyze
 bsToBytes :: Monad m => Pipe ByteString Word8 m r

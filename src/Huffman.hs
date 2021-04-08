@@ -34,7 +34,7 @@ type WeightedHT a = Weight (HTree a)-- HTree contains some weight
 mergeWHT :: WeightedHT a -> WeightedHT a -> WeightedHT a
 mergeWHT (WPair w1 ht1) (WPair w2 ht2) = WPair (w1 + w2) (merge ht1 ht2)
 
-
+instance Binary a => Binary (HTree a)
 -- ===============================================================------------------------------
 -- ===============================================================building Huffman encoding tree
 type FreqTable a = MS.Map a Int
@@ -74,28 +74,6 @@ listQueueStateTable tab = void $ MS.traverseWithKey addNode tab
   where
     addNode :: a -> Int -> State (PQueue (WeightedHT a)) ()
     addNode x i = modify (insertPQ (WPair i (makeHT x)))
-
--- ===============================================================================----------------
--- =============================================================================== binary instance
-instance Binary a => Binary (HTree a) where
-    put = putHT
-    get = getHT
-
-putHT :: Binary a => HTree a -> Put
-putHT (HLeaf x) = do
-    Data.Binary.put True
-    Data.Binary.put x
-putHT (HNode ht1 ht2) = do
-    Data.Binary.put False
-    Data.Binary.put ht1
-    Data.Binary.put ht2
-
-getHT :: Binary a => Get (HTree a)
-getHT = do
-    isLeaf <- Data.Binary.get
-    if isLeaf
-        then HLeaf <$> Data.Binary.get
-        else HNode <$> Data.Binary.get <*> Data.Binary.get
 
 -- ===========================================================================================-----------------
 -- =========================================================================================== Heap and PQueue
